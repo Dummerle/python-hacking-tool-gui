@@ -29,7 +29,7 @@ class Tabs(QWidget):
         self.hashcrackerTab = QWidget()
         self.rtGenTab = QWidget()
         
-        self.tabs.resize(800, 600)
+        #self.tabs.resize(800, 600)
         
         self.tabs.addTab(self.ddosTab, "Denial of Service")
         self.tabs.addTab(self.portscannerTab, "Portscanner")

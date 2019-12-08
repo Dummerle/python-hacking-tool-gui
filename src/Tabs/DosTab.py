@@ -15,7 +15,7 @@ class DosTab(QWidget):
         self.layout=QVBoxLayout(self)
         
         self.titleText = QLabel()
-        self.titleText.setText("Denial of service Gui tool\nIp Adresse") 
+        self.titleText.setText("<H1>Denial of service</h1>\nIp Adresse") 
         self.layout.addWidget(self.titleText)
         
         self.ipField = QLineEdit()
@@ -30,6 +30,7 @@ class DosTab(QWidget):
         
         self.startButton = QPushButton()
         self.startButton.setText("Starte Attacke")
+        self.dos=DenialOfService()
         self.startButton.clicked.connect(self.start)
         self.layout.addWidget(self.startButton)
         
@@ -39,7 +40,7 @@ class DosTab(QWidget):
         if not self.running:
             self.running=True
             self.startButton.setText("Stoppe Attacke")
-            self.dos=DenialOfService()
+            
             self.dos.setIp(self.ipField.text())
             self.dos.setPort(int(self.portField.text()))
             
