@@ -43,6 +43,7 @@ class DosTab(QWidget):
             
             self.dos.setIp(self.ipField.text())
             self.dos.setPort(int(self.portField.text()))
+            self.dos.start()
             
         else:
             self.startButton.setText("Starte Attacke")
