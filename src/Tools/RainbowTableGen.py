@@ -19,17 +19,18 @@ class RainbowTableGen():
         elif hash == "SHA384":
             return _hashlib.openssl_sha384(string.encode()).hexdigest()
     
-    def genRtFull(self, charset, sAnzahlZeichen, eAnzahlZeichen, hashType="SHA512"):
+    def genRtFull(self, charset, sAnzahlZeichen, eAnzahlZeichen, hashType="SHA512", filename="Rainbowtable.txt"):
         
-        rtFile = open("RainbowTable.txt", "w")
+        rtFile = open(filename, "w")
         
         myLetters = charset
         for i in range (sAnzahlZeichen, eAnzahlZeichen):
             for j in map ("".join, itertools.product(myLetters, repeat=i)):
+                print(j)
                 rtFile.write(j + " # " + str(self.getHash(j, hashType)) + "\n")          
         rtFile.close()
         
-    def genRtFile(self, file, hashType="SHA512"):
+    def genRtFile(self, file, hashType="SHA512", filename="RainbowTable.txt"):
         
         readFile = open(file, "r")
         rtFile = open("RainbowTable.txt", "w")

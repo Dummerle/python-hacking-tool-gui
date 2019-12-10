@@ -6,6 +6,7 @@ from Tabs.DosTab import DosTab
 from Tabs.PortScannerTab import PortScannerTab
 from Tabs.HashcrackerTab import HashcrackerTab
 from Tabs.HashGeneratorTab import HashGeneratorTab
+from Tabs.RainbowGeneratorTab import RainbowGeneratorTab
 
 
 
@@ -31,7 +32,7 @@ class Tabs(QWidget):
         self.portscannerTab = PortScannerTab()
         self.hashcrackerTab = HashcrackerTab()
         self.hashGeneratorTab=HashGeneratorTab()
-        self.rtGenTab = QWidget()
+        self.rtGenTab = RainbowGeneratorTab()
         
         #self.tabs.resize(800, 600)
         
