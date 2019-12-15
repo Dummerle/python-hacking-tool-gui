@@ -9,7 +9,6 @@ from Tabs.HashGeneratorTab import HashGeneratorTab
 from Tabs.RainbowGeneratorTab import RainbowGeneratorTab
 
 
-
 class MainWindow(QMainWindow):
 
     def __init__(self):
