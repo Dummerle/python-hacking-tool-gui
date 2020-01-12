@@ -1,6 +1,6 @@
+import os
 import socket
 from threading import Thread
-import os
 
 running=True
 

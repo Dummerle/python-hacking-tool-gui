@@ -1,9 +1,8 @@
-
-from PyQt5.Qt import QWidget, QLabel, QVBoxLayout, QComboBox, QPushButton,\
+from PyQt5.Qt import QWidget, QLabel, QVBoxLayout, QComboBox, QPushButton, \
     QHBoxLayout, QLineEdit, QFileDialog
-from Tools.RainbowTableGen import RainbowTableGen
-from PyQt5.uic.Compiler.qtproxies import QtGui
-from platform import platform
+
+from src.Tools.RainbowTableGen import RainbowTableGen
+
 
 class RainbowGeneratorTab(QWidget):
   

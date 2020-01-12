@@ -1,7 +1,6 @@
+from PyQt5.Qt import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout
 
-from PyQt5.Qt import QWidget, QLabel, QLineEdit, QPushButton, QLayout,\
-    QVBoxLayout
-from Tools.DenialOfService import DenialOfService
+from src.Tools.DenialOfService import DenialOfService
 
 
 class DosTab(QWidget):

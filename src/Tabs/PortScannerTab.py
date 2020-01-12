@@ -1,7 +1,10 @@
-from PyQt5.Qt import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton,\
-    QHBoxLayout, QTextEdit
-from Tools.PortScanner import PortScanner
 from threading import Thread
+
+from PyQt5.Qt import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, \
+    QHBoxLayout, QTextEdit
+
+from src.Tools.PortScanner import PortScanner
+
 
 class PortScannerTab(QWidget):
    

@@ -2,11 +2,11 @@ import sys
 
 from PyQt5.Qt import QWidget, QMainWindow, QApplication, QVBoxLayout, QTabWidget, QTextEdit
 
-from Tabs.DosTab import DosTab
-from Tabs.PortScannerTab import PortScannerTab
-from Tabs.HashcrackerTab import HashcrackerTab
-from Tabs.HashGeneratorTab import HashGeneratorTab
-from Tabs.RainbowGeneratorTab import RainbowGeneratorTab
+from src.Tabs.DosTab import DosTab
+from src.Tabs.HashGeneratorTab import HashGeneratorTab
+from src.Tabs.HashcrackerTab import HashcrackerTab
+from src.Tabs.PortScannerTab import PortScannerTab
+from src.Tabs.RainbowGeneratorTab import RainbowGeneratorTab
 
 
 class MainWindow(QMainWindow):

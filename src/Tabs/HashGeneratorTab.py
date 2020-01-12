@@ -1,7 +1,8 @@
-from PyQt5.Qt import QWidget, QVBoxLayout, QLabel, QLineEdit, QTextEdit, \
+from PyQt5.Qt import QWidget, QVBoxLayout, QLabel, QTextEdit, \
     QPushButton, QComboBox
 
-from Tools.HashGenerator import HashGenerator
+from src.Tools.HashGenerator import HashGenerator
+
 
 class HashGeneratorTab(QWidget):
     
