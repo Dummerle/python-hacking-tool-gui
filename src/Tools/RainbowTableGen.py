@@ -1,5 +1,5 @@
-import itertools
 import _hashlib
+import itertools
 
 
 class RainbowTableGen():
