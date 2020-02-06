@@ -1,3 +1,5 @@
+import socket
+
 from PyQt5.Qt import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout
 
 from src.Tools.DenialOfService import DenialOfService
@@ -38,16 +40,25 @@ class DosTab(QWidget):
 
     def start(self):
         if not self.running:
+
+            try:
+                mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                mysocket.connect((self.ipField.text(), int(self.portField.text())))
+            except:
+                self.console.log("Verbindung fehlgeschlagen")
+                return
+                pass
             self.running = True
             self.startButton.setText("Stoppe Attacke")
             self.console.log("Angrff gestartet")
             self.dos.setIp(self.ipField.text())
             self.dos.setPort(int(self.portField.text()))
-            if not self.dos.start():
-                self.start()
+            print("READY TO DOS")
+            self.dos.start()
 
         else:
             self.startButton.setText("Starte Attacke")
             self.running = False
             self.console.log("Angrff gestoppt")
+            print("STOP")
             self.dos.stop()

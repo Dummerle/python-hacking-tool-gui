@@ -9,6 +9,7 @@ class PortScanner():
         if res == 0:
             sock.close()
             return True
+        else:
+            return False
 
 
-ps = PortScanner()
