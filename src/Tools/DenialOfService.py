@@ -18,10 +18,9 @@ class DenialOfService:
     def start(self):
         self.procs = []
         for i in range(os.cpu_count() * 2):
-
             proc = multiprocessing.Process(target=self.dos)
             self.procs.append(proc)
-            proc.daemon=True
+            proc.daemon = True
             proc.start()
         print(self.procs.__len__())
 
