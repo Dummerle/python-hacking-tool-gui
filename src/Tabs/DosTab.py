@@ -47,18 +47,16 @@ class DosTab(QWidget):
             except:
                 self.console.log("Verbindung fehlgeschlagen")
                 return
-                pass
+
             self.running = True
             self.startButton.setText("Stoppe Attacke")
             self.console.log("Angrff gestartet")
             self.dos.setIp(self.ipField.text())
             self.dos.setPort(int(self.portField.text()))
-            print("READY TO DOS")
             self.dos.start()
 
         else:
             self.startButton.setText("Starte Attacke")
             self.running = False
             self.console.log("Angrff gestoppt")
-            print("STOP")
             self.dos.stop()

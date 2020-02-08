@@ -1,7 +1,9 @@
 import sys
 
+from PyQt5 import QtCore
 from PyQt5.Qt import QWidget, QMainWindow, QApplication, QVBoxLayout, QTabWidget
 
+from src.Tabs.CPUStressTab import CPUStressTab
 from src.Tabs.DosTab import DosTab
 from src.Tabs.HashGeneratorTab import HashGeneratorTab
 from src.Tabs.HashcrackerTab import HashcrackerTab
@@ -20,6 +22,12 @@ class MainWindow(QMainWindow):
         self.show()
 
 
+class Stream(QtCore.QObject):
+
+    def write(self, text):
+        self.newText.emit(str(text))
+
+
 class Tabs(QWidget):
 
     def __init__(self, parent):
@@ -35,6 +43,7 @@ class Tabs(QWidget):
         self.hashcrackerTab = HashcrackerTab(self.console)
         self.hashGeneratorTab = HashGeneratorTab(self.console)
         self.rtGenTab = RainbowGeneratorTab(self.console)
+        self.stressTab = CPUStressTab(self.console)
 
         # self.tabs.resize(800, 600)
 
@@ -43,15 +52,12 @@ class Tabs(QWidget):
         self.tabs.addTab(self.hashGeneratorTab, "HashGenrator")
         self.tabs.addTab(self.hashcrackerTab, "Hashcracker")
         self.tabs.addTab(self.rtGenTab, "Rainbowtable Generator")
+        self.tabs.addTab(self.stressTab, "CPU Stress")
 
         self.layout.addWidget(self.tabs)
 
         self.layout.addStretch(1)
-
-        # self.s=open("log.txt", "w", True, "UTF-8")
-        # sys.stdout=self.s
         self.layout.addWidget(self.console)
-        self.setLayout(self.layout)
 
 
 if __name__ == '__main__':

