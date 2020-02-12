@@ -1,6 +1,5 @@
 import sys
 
-from PyQt5 import QtCore
 from PyQt5.Qt import QWidget, QMainWindow, QApplication, QVBoxLayout, QTabWidget
 
 from src.Tabs.CPUStressTab import CPUStressTab
@@ -20,12 +19,6 @@ class MainWindow(QMainWindow):
         self.setGeometry(0, 0, 800, 600)
         self.setCentralWidget(Tabs(self))
         self.show()
-
-
-class Stream(QtCore.QObject):
-
-    def write(self, text):
-        self.newText.emit(str(text))
 
 
 class Tabs(QWidget):

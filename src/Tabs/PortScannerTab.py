@@ -1,10 +1,30 @@
-from threading import Thread
-
 from PyQt5.Qt import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, \
     QHBoxLayout
+from PyQt5.QtCore import QThread, pyqtSignal
 
 from src.Tools.PortScanner import PortScanner
 from src.other.Console import Console
+
+
+class PortScanThread(QThread):
+    changeValue = pyqtSignal([])
+
+    def run(self):
+        try:
+            for i in range(self.start, self.end + 1):
+
+                ergebnis = self.portScanner.scan(self.ip, i)
+                if ergebnis:
+                    # self.console.log("Offener Port bei: " + str(i))
+                    self.openPorts.append(i)
+                    print(i)
+                    self.valueChanged.emit(self.openPorts)
+        except:
+            self.console.log("Ein Fehler ist passiert")
+        # self.console.log("Scan Abgeschlossen")
+        for i in self.openPorts:
+            # self.output.log("Offener Port bei: "+str(i))
+            pass
 
 
 class PortScannerTab(QWidget):
@@ -52,12 +72,19 @@ class PortScannerTab(QWidget):
     def initScanThread(self):
 
         ip = self.ipField.text()
+
         start = int(self.startField.text())
         end = int(self.endField.text())
         self.console.log("Starte Scan")
-        t = Thread(target=self.scan, args=(ip, start, end))
+        print("Noch gut")
+
+        self.thread = PortScanThread()
+
+        self.thread.changeValue.connect(self.valueChanged)
+
         self.startButton.setDisabled(True)
-        t.start()
+
+        # self.output.moveToThread(t)
 
     def scan(self, ip: str, start: int, end: int):
 
@@ -76,3 +103,7 @@ class PortScannerTab(QWidget):
             # self.output.log("Offener Port bei: "+str(i))
             pass
         self.startButton.setDisabled(False)
+
+    def valueChanged(self, openPorts: []):
+        for i in openPorts:
+            self.output.setText(self.output.toPlainText() + "Offener Port bei " + i)

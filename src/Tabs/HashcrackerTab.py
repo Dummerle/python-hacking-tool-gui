@@ -33,7 +33,7 @@ class HashcrackerTab(QWidget):
         self.layout.addLayout(self.hboxText)
 
         self.hboxAction = QHBoxLayout()
-        self.bruteforceCharset = QLabel("Charset")
+        self.bruteforceCharset = QLineEdit("Charset")
         self.hboxAction.addWidget(self.bruteforceCharset)
         self.listSelect = QPushButton("Wähle Datei aus")
         self.hboxAction.addWidget(self.listSelect)
