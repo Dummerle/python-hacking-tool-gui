@@ -15,5 +15,5 @@ class PortScanThread(QThread):
         except:
             self.console.log("Ein Fehler ist passiert")
         for i in self.openPorts:
-            self.output.log("Offener dPort bei: "+str(i))
+            self.output.log("Offener dPort bei: " + str(i))
             pass

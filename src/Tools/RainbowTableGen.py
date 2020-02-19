@@ -1,5 +1,6 @@
 import _hashlib
 import itertools
+import os
 
 
 class RainbowTableGen():
@@ -24,18 +25,17 @@ class RainbowTableGen():
         rtFile = open(filename, "w")
 
         myLetters = charset
-        for i in range(sAnzahlZeichen, eAnzahlZeichen):
+        for i in range(sAnzahlZeichen, eAnzahlZeichen + 1):
             for j in map("".join, itertools.product(myLetters, repeat=i)):
                 print(j)
-                rtFile.write(j + " # " + str(self.getHash(j, hashType)) + "\n")
+                rtFile.write(str(self.getHash(j, hashType)) + "#" + j + os.linesep)
         rtFile.close()
 
-    def genRtFile(self, file, hashType="SHA512", filename="RainbowTable.txt"):
+    def genRtFile(self, file, hashType="SHA512", wfilename="RainbowTable.txt"):
 
-        readFile = open(file, "r")
-        rtFile = open("RainbowTable.txt", "w")
-        for line in readFile:
-            rtFile.write(line.rstrip() + " # " + str(self.getHash(line.rstrip(), hashType)) + "\n")
-        readFile.close()
-
-        rtFile.close()
+        readfile = open(file, "r")
+        newFile = open(wfilename, "w")
+        for i in readfile:
+            newFile.write(self.getHash(i, hashType) + "#" + i)
+        newFile.close()
+        print("Generierung abgeschlossen")

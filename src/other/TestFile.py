@@ -1,8 +1,6 @@
 import itertools
 import multiprocessing
-from threading import Thread
-
-from src.Tools.HashGenerator import HashGenerator
+import os
 
 
 def fred(queue, proc):
@@ -29,7 +27,7 @@ def worker(queue, hash, charset, startChar, hashType):
                 cracked = startChar + j
                 break
     try:
-        #print(cracked)
+        # print(cracked)
         queue.put(cracked)
 
     except:
@@ -38,12 +36,13 @@ def worker(queue, hash, charset, startChar, hashType):
 
 
 def initProc(charset):
-    queue = multiprocessing.Queue()
+    queue = []
     procs = []
     processes = 0
     for i in charset:
-        proc = multiprocessing.Process(target=worker, args=(queue,
-                                                            "d716a4188569b68ab1b6dfac178e570114cdf0ea3a1cc0e31486c3e41241bc6a76424e8c37ab26f096fc85ef9886c8cb634187f4fddff645fb099f1ff54c6b8c",
+        queue.append(multiprocessing.Queue())
+        proc = multiprocessing.Process(target=worker, args=(queue[queue.__len__()],
+                                                            "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
                                                             charset, i, "SHA512"))
         procs.append(proc)
         processes = processes + 1
@@ -53,9 +52,6 @@ def initProc(charset):
     res = []
     for i in range(processes):
         res.append(queue.get())
-    for i in procs:
-        t = Thread(target=fred, args=(queue, i))
-        t.start()
 
     for i in procs:
         i.join()
@@ -65,9 +61,18 @@ def initProc(charset):
     return res
 
 
+CPU_Pct = str(round(
+    float(os.popen('''grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage }' ''').readline()),
+    2))
+
+# print results
+print("CPU Usage = " + CPU_Pct)
+
+'''
 x = initProc("abcdefghij")
 
 for i in x:
     if not i == None:
-        #print(i)
+        print(i)
         pass
+'''
