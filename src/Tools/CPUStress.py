@@ -15,7 +15,7 @@ class CPUStress:
         for i in range(processes):
             proc = multiprocessing.Process(target=self.stress)
             self.procs.append(proc)
-            proc.daemon = True
+            # proc.daemon = True
             proc.start()
 
     def stop(self):

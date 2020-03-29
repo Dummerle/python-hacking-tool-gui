@@ -27,7 +27,7 @@ class Tabs(QWidget):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
-        self.console = Console()
+        self.console = Console("Superconsole")
 
         self.tabs = QTabWidget()
 
@@ -43,7 +43,7 @@ class Tabs(QWidget):
         self.tabs.addTab(self.ddosTab, "Denial of Service")
         self.tabs.addTab(self.portscannerTab, "Portscanner")
         self.tabs.addTab(self.hashGeneratorTab, "HashGenrator")
-        self.tabs.addTab(self.hashcrackerTab, "Hashcracker")
+        self.tabs.addTab(self.hashcrackerTab, "Hashcracker (Not Working)")
         self.tabs.addTab(self.rtGenTab, "Rainbowtable Generator")
         self.tabs.addTab(self.stressTab, "CPU Stress")
 

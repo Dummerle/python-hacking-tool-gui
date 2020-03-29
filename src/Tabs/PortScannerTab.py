@@ -7,25 +7,32 @@ from src.other.Console import Console
 
 
 class PortScanThread(QThread):
-    changeValue = pyqtSignal([])
+    portadd = pyqtSignal(int)
+
+    def __init__(self, args, parent=None):
+        super().__init__(parent)
+        self.startPort = args[0]
+        self.endPort = args[1]
+        self.scanIp = args[2]
 
     def run(self):
+        self.active = True
+        self.portScanner = PortScanner()
         try:
-            for i in range(self.start, self.end + 1):
 
-                ergebnis = self.portScanner.scan(self.ip, i)
+            for i in range(self.startPort, self.endPort + 1):
+                ergebnis = self.portScanner.scan(self.scanIp, i)
                 if ergebnis:
-                    # self.console.log("Offener Port bei: " + str(i))
-                    self.openPorts.append(i)
-                    print(i)
-                    self.valueChanged.emit(self.openPorts)
+                    self.portadd.emit(i)
+                if not self.active:
+                    break
         except:
             self.console.log("Ein Fehler ist passiert")
-        # self.console.log("Scan Abgeschlossen")
-        for i in self.openPorts:
-            # self.output.log("Offener Port bei: "+str(i))
-            pass
 
+        # self.startButton.setDisabled(False)
+
+    def kill(self):
+        self.active = False
 
 class PortScannerTab(QWidget):
 
@@ -36,7 +43,7 @@ class PortScannerTab(QWidget):
         super().__init__()
         self.layout = QVBoxLayout(self)
 
-        self.titleText = QLabel("<H1>Portcanner</H1>\nIP-Adresse")
+        self.titleText = QLabel("<H1>Portscanner</H1>\nIP-Adresse")
         self.layout.addWidget(self.titleText)
 
         self.ipField = QLineEdit("192.168.178.1")
@@ -61,49 +68,25 @@ class PortScannerTab(QWidget):
         self.startButton.setText("Starte Scan")
 
         self.portScanner = PortScanner()
-        self.startButton.clicked.connect(self.initScanThread)
+        self.startButton.clicked.connect(self.btnClicked)
         self.layout.addWidget(self.startButton)
 
-        self.output = Console()
+        self.output = Console("Output")
         self.layout.addWidget(self.output)
 
         self.layout.addStretch(1)
 
-    def initScanThread(self):
+    def btnClicked(self):
+        if self.startButton.text() == "Starte Scan":
+            self.output.clear()
+            self.thread = PortScanThread(
+                args=(int(self.startField.text()), int(self.endField.text()), self.ipField.text()))
+            self.thread.portadd.connect(self.logPort)
+            self.thread.start()
+            self.startButton.setText("Beende Scan")
+        else:
+            self.startButton.setText("Starte Scan")
+            self.thread.kill()
 
-        ip = self.ipField.text()
-
-        start = int(self.startField.text())
-        end = int(self.endField.text())
-        self.console.log("Starte Scan")
-        print("Noch gut")
-
-        self.thread = PortScanThread()
-
-        self.thread.changeValue.connect(self.valueChanged)
-
-        self.startButton.setDisabled(True)
-
-        # self.output.moveToThread(t)
-
-    def scan(self, ip: str, start: int, end: int):
-
-        try:
-            for i in range(start, end + 1):
-
-                ergebnis = self.portScanner.scan(ip, i)
-                if ergebnis:
-                    # self.console.log("Offener Port bei: " + str(i))
-                    self.openPorts.append(i)
-                    print(i)
-        except:
-            self.console.log("Ein Fehler ist passiert")
-        # self.console.log("Scan Abgeschlossen")
-        for i in self.openPorts:
-            # self.output.log("Offener Port bei: "+str(i))
-            pass
-        self.startButton.setDisabled(False)
-
-    def valueChanged(self, openPorts: []):
-        for i in openPorts:
-            self.output.setText(self.output.toPlainText() + "Offener Port bei " + i)
+    def logPort(self, port):
+        self.output.log("Offener Port bei: " + str(port))

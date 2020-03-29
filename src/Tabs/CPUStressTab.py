@@ -35,6 +35,8 @@ class CPUStressTab(QWidget):
                 cpucores = os.cpu_count()
             self.console.log("Starte Stress mit " + str(cpucores) + " Kernen")
             self.cpustress.run(cpucores)
+
+
         else:
             self.stress = False
             self.startButton.setText("Start")

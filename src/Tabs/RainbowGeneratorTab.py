@@ -65,6 +65,8 @@ class RainbowGeneratorTab(QWidget):
         file = self.selectedFile.text()
         hashType = self.selectHash.currentText()
         save = QFileDialog.getSaveFileName(parent=self, caption="Speichern unter", directory=str(Path.home()))
+        if save[0] == '':
+            return
         save = save[0]
 
         t = Thread(target=self.threadGen, args=(file, hashType, save))

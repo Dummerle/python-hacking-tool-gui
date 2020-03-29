@@ -27,10 +27,9 @@ class RainbowTableGen():
         myLetters = charset
         for i in range(sAnzahlZeichen, eAnzahlZeichen + 1):
             for j in map("".join, itertools.product(myLetters, repeat=i)):
-                print(j)
                 rtFile.write(str(self.getHash(j, hashType)) + "#" + j + os.linesep)
         rtFile.close()
-
+        print("Gen Abgeschlossen")
     def genRtFile(self, file, hashType="SHA512", wfilename="RainbowTable.txt"):
 
         readfile = open(file, "r")
