@@ -95,5 +95,6 @@ class PortScannerTab(QWidget):
             self.thread.kill()
 
     def logPort(self, port):
-
+        if port.startswith("Scan abgeschlossen"):
+            self.btnClicked()
         self.output.log(port)

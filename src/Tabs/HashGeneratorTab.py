@@ -16,7 +16,7 @@ class HashGeneratorTab(QWidget):
         self.textField = QTextEdit()
         self.layout.addWidget(self.textField)
 
-        self.selectHash = QComboBox(self)
+        self.selectHash = QComboBox()
         self.selectHash.addItems(["SHA1", "SHA224", "SHA256", "SHA384", "SHA512", "MD5"])
         self.selectHash.setCurrentText("SHA512")
         self.layout.addWidget(self.selectHash)
